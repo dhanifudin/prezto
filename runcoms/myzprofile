@@ -1,0 +1,25 @@
+#
+# Editors
+#
+
+export EDITOR='vim'
+export VISUAL='vim'
+
+#
+# Google API Key
+#
+export GOOGLE_API_KEY='AIzaSyBFYpRkQf1LhJuW0IK18Gr0zPZEWuR1gb8'
+
+#
+# Set java awt for non reparenting wm.
+#
+
+export _JAWA_AWT_WM_NONREPARENTING=1
+
+# Set the list of directories that Zsh searches for programs.
+path=(
+  $HOME/bin
+  $HOME/.local/bin
+  $HOME/.npm/bin
+  $path
+)

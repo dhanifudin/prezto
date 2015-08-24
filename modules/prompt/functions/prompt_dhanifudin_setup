@@ -1,0 +1,87 @@
+
+#
+# A colorful, friendly, multiline theme with some handy features.
+#
+# Authors:
+#   Dian Hanifudin Subhi <dhanifudin@gmail.com>
+#   Sorin Ionescu <sorin.ionescu@gmail.com>
+#
+
+function prompt_dhanifudin_battery {
+  _prompt_dhanifudin_battery=`acpi | cut -d ',' -f 2`
+}
+
+function prompt_dhanifudin_volume {
+  _prompt_dhanifudin_volume=`exec amixer get Master | egrep -o "[0-9]+%" | egrep -o "[0-9]*"`
+}
+
+function prompt_dhanifudin_workspaces {
+  _workspaces=`wmctrl -d | awk '{ print $NF }' | tr '\n' ' '`
+  _active_workspace=`wmctrl -d | awk '{ if ($2 == "*") print $NF}'`
+  _prompt_workspaces=${_workspaces//${_active_workspace}/%F{blue}[${_active_workspace}]%f}
+  # _prompt_workspaces="archlinux"
+}
+
+function +vi-set_novcs_prompt_symbol {
+  _prompt_dhanifudin_symbol=':)'
+}
+
+function +vi-set_vcs_prompt_symbol {
+  _prompt_dhanifudin_symbol=':|'
+}
+
+function +vi-git_precmd {
+  # Check for untracked files, since vcs_info does not.
+  if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
+    hook_com[unstaged]+='%F{green}?%f'
+  fi
+}
+
+function prompt_dhanifudin_precmd {
+  # Replace '/home/<user>' with '~'.
+  _prompt_dhanifudin_pwd="${PWD/#$HOME/~}"
+  prompt_dhanifudin_battery
+  prompt_dhanifudin_volume
+  prompt_dhanifudin_workspaces
+  vcs_info
+}
+
+function prompt_dhanifudin_setup {
+  setopt LOCAL_OPTIONS
+  unsetopt XTRACE KSH_ARRAYS
+  prompt_opts=(cr percent subst)
+
+  # Load required functions.
+  autoload -Uz vcs_info
+  autoload -Uz add-zsh-hook
+
+  # Add hook to set up prompt parameters before each command.
+  add-zsh-hook precmd prompt_dhanifudin_precmd
+
+  # Set editor-info parameters.
+  zstyle ':prezto:module:editor:info:completing' format '%F{green}...%f'
+  zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{yellow}--- COMMAND ---%f'
+
+  # Set vcs_info parameters.
+  zstyle ':vcs_info:*' check-for-changes true
+  zstyle ':vcs_info:*' formats ' on %F{magenta}%b%f%c%u'
+  zstyle ':vcs_info:*' actionformats ' on %F{magenta}%b%f%c%u %F{yellow}(%a)%f'
+  zstyle ':vcs_info:*' stagedstr '%F{green}+%f'
+  zstyle ':vcs_info:*' unstagedstr '%F{green}!%f'
+
+  # Set vcs_info hooks.
+  # NOTE: Prior to Zsh v4.3.12, there are no static hooks, no vcs_info_hookadd
+  #       function, and no 'no-vcs' hook.
+  zstyle ':vcs_info:*+start-up:*' hooks set_novcs_prompt_symbol
+  zstyle ':vcs_info:git*+set-message:*' hooks set_vcs_prompt_symbol git_precmd
+  zstyle ':vcs_info:*+set-message:*' hooks set_vcs_prompt_symbol
+
+  # Define prompts.
+  PROMPT='%(?..%F{red}%B-> [%?]%b%f
+)%F{green}${_prompt_dhanifudin_pwd}%f${vcs_info_msg_0_}
+%F{blue}${_prompt_dhanifudin_symbol}%f '
+  RPROMPT='${_prompt_workspaces} ${editor_info[keymap]}%F{magenta}bat:${_prompt_dhanifudin_battery} %f|%F{yellow}vol: ${_prompt_dhanifudin_volume}%f '
+  SPROMPT='zsh: correct %F{magenta}%R%f to %F{green}%r%f [nyae]? '
+}
+
+prompt_dhanifudin_setup "$@"

@@ -1,0 +1,19 @@
+zstyle ':prezto:load' pmodule \
+  'environment' \
+  'terminal' \
+  'editor' \
+  'history' \
+  'directory' \
+  'spectrum' \
+  'utility' \
+  'completion' \
+  'prompt' \
+  'fasd'
+
+zstyle ':prezto:module:editor' key-bindings 'vi'
+
+zstyle ':prezto:module:prompt' theme 'dhanifudin'
+
+zstyle ':prezto:module:terminal' auto-title 'yes'
+
+zstyle ':prezto:module:terminal:window-title' format '%m: %s'
