@@ -1,3 +1,5 @@
+# vim: set ft=conf
+
 zstyle ':prezto:load' pmodule \
   'environment' \
   'terminal' \
