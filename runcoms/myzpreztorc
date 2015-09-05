@@ -1,4 +1,15 @@
-zstyle -a ':prezto:load' pmodule \
+# vim: set ft=conf
+
+zstyle ':prezto:load' pmodule \
+  'environment' \
+  'terminal' \
+  'editor' \
+  'history' \
+  'directory' \
+  'spectrum' \
+  'utility' \
+  'completion' \
+  'prompt' \
   'fasd'
 
 zstyle ':prezto:module:editor' key-bindings 'vi'
