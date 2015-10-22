@@ -10,11 +10,15 @@ zstyle ':prezto:load' pmodule \
   'utility' \
   'completion' \
   'prompt' \
+  'ruby' \
+  'tmux' \
   'fasd'
 
 zstyle ':prezto:module:editor' key-bindings 'vi'
 
 zstyle ':prezto:module:prompt' theme 'dhanifudin'
+
+zstyle ':prezto:module:ruby:chruby' auto-switch 'yes'
 
 zstyle ':prezto:module:terminal' auto-title 'yes'
 

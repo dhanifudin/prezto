@@ -21,5 +21,22 @@ path=(
   $HOME/bin
   $HOME/.local/bin
   $HOME/.npm/bin
+  /usr/local/opt/coreutils/libexec/gnubin
   $path
 )
+
+# PHP version
+source $(brew --prefix php-version)/php-version.sh && php-version 5.5
+
+# Gruvbox Colorscheme
+if [ -f $HOME/.vim/plug/gruvbox/gruvbox_256palette.sh ]; then
+  source $HOME/.vim/plug/gruvbox/gruvbox_256palette.sh
+fi
+
+# The Fuck
+eval $(thefuck --alias)
+
+# Aliases
+if [ -f $HOME/.aliases]; then
+  source $HOME/.aliases
+fi

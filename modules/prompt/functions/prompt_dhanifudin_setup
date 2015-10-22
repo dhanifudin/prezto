@@ -16,10 +16,10 @@ function prompt_dhanifudin_volume {
 }
 
 function prompt_dhanifudin_workspaces {
-  _workspaces=`wmctrl -d | awk '{ print $NF }' | tr '\n' ' '`
-  _active_workspace=`wmctrl -d | awk '{ if ($2 == "*") print $NF}'`
-  _prompt_workspaces=${_workspaces//${_active_workspace}/%F{blue}[${_active_workspace}]%f}
-  # _prompt_workspaces="archlinux"
+#  _workspaces=`wmctrl -d | awk '{ print $NF }' | tr '\n' ' '`
+#   _active_workspace=`wmctrl -d | awk '{ if ($2 == "*") print $NF}'`
+#   _prompt_workspaces=${_workspaces//${_active_workspace}/%F{blue}[${_active_workspace}]%f}
+   _prompt_workspaces="archlinux"
 }
 
 function +vi-set_novcs_prompt_symbol {
@@ -40,9 +40,9 @@ function +vi-git_precmd {
 function prompt_dhanifudin_precmd {
   # Replace '/home/<user>' with '~'.
   _prompt_dhanifudin_pwd="${PWD/#$HOME/~}"
-  prompt_dhanifudin_battery
-  prompt_dhanifudin_volume
-  prompt_dhanifudin_workspaces
+# prompt_dhanifudin_battery
+#  prompt_dhanifudin_volume
+#prompt_dhanifudin_workspaces
   vcs_info
 }
 
